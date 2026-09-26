@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>检录信息</title>
+<style>
+  /* =========================================================
+     尺寸系统
+     --rows : 表格总行数（1 行表头 + 10 行数据）
+     --row-h: 每一行的高度 = 视口高度 / 总行数
+     --fs   : 字号，同时受行高与屏宽约束，保证 7 列放得下
+     ========================================================= */
+  :root {
+    --rows: 11;
+    --row-h: calc(100vh / var(--rows));
+    --fs: min(calc(100vh / var(--rows) * 0.52), 3vw);
+  }
+  @supports (height: 100dvh) {
+    :root {
+      --row-h: calc(100dvh / var(--rows));
+      --fs: min(calc(100dvh / var(--rows) * 0.52), 3vw);
+    }
+  }
+
+  /* 完全贴边 */
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    color: #fff;
+    font-family: "Microsoft YaHei", "PingFang SC", "Heiti SC", "Noto Sans SC", sans-serif;
+  }
+
+  /* 大屏容器：无内边距 */
+  .screen {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* =========================================================
+     表格
+     固定列宽用 em（随字号缩放），项目列自动吃掉剩余宽度
+     ========================================================= */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: var(--fs);
+    flex: none;
+  }
+
+  th, td {
+    height: var(--row-h);
+    padding: 0 0.08em;          /* 收窄内边距，把空间让给文字 */
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
+    border: none;
+    font-size: inherit;
+    letter-spacing: 0;          /* 避免额外字距撑宽 */
+  }
+
+  thead th {
+    background: #06182e;
+    font-weight: 700;
+  }
+
+  /* 相邻两行：深蓝 / 浅蓝 交替 */
+  tbody tr:nth-child(odd)  td { background: #12345e; }
+  tbody tr:nth-child(even) td { background: #2563a8; }
+
+  /* 状态颜色 */
+  .st-wait { color: #ffffff; }   /* 等待检录：白色 */
+  .st-go   { color: #00e676; }   /* 正在检录：绿色 */
+  .st-stop { color: #ff3b30; }   /* 停止检录：红色 */
+</style>
+</head>
+<body>
+
+<div class="screen">
+  <table>
+    <colgroup>
+      <!-- 姓名：4 个汉字 -->
+      <col style="width:4.8em">
+      <!-- 项目：自动占据剩余空间（已调低） -->
+      <col>
+      <!-- 检录口 / 道次：各 3 字符（已调高） -->
+      <col style="width:3.8em">
+      <col style="width:3.8em">
+      <!-- 开始时间 / 检录时间：数字 + 冒号（已调高） -->
+      <col style="width:5em">
+      <col style="width:5em">
+      <!-- 状态：4 个汉字（已调高） -->
+      <col style="width:5em">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>项目</th>
+        <th>检录口</th>
+        <th>道次</th>
+        <th>开始时间</th>
+        <th>检录时间</th>
+        <th>状态</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+
+<!-- ① 先加载数据文件 -->
+<script src="data.js"></script>
+
+<!-- ② 再执行渲染逻辑 -->
+<script>
+/* =========================================================
+   读取数据（带兜底，防止 data.js 缺失导致白屏）
+   ========================================================= */
+const CONFIG = window.CHECKIN_CONFIG || {
+  MAX_ROWS: 10,
+  STOP_REMOVE_MS: 10 * 60 * 1000,
+  TIME_MODE: 'relative'
+};
+const DATA = window.CHECKIN_DATA || [];
+
+const MAX_ROWS       = CONFIG.MAX_ROWS;
+const STOP_REMOVE_MS = CONFIG.STOP_REMOVE_MS;
+const TIME_MODE      = CONFIG.TIME_MODE;
+
+/* =========================================================
+   时间换算
+   relative → 基准 = 当前整分钟
+   absolute → 基准 = 今天 00:00
+   ========================================================= */
+const now = new Date();
+const currentMinute = Math.floor(now.getTime() / 60000) * 60000;
+const todayStart    = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+function parseTime(value) {
+  if (TIME_MODE === 'absolute') {
+    const [h, m] = String(value).split(':').map(Number);
+    return todayStart + (h * 60 + m) * 60000;
+  }
+  // relative：数字表示相对当前时刻的分钟偏移
+  return currentMinute + Number(value) * 60000;
+}
+
+/* =========================================================
+   构建运行时记录
+   ========================================================= */
+const records = DATA.map((d, i) => ({
+  id: i,
+  name: d.name,
+  event: d.event,
+  gate: d.gate,
+  lane: d.lane,
+  checkinTs: parseTime(d.checkin),
+  startTs:   parseTime(d.start)
+}));
+
+/* =========================================================
+   渲染
+   ========================================================= */
+const tbody = document.getElementById('rows');
+let lastHTML = '';
+
+function fmtTime(ts) {
+  const d = new Date(ts);
+  return String(d.getHours()).padStart(2, '0') + ':' +
+         String(d.getMinutes()).padStart(2, '0');
+}
+
+/* 依据设备本地时间判断状态 */
+function statusOf(rec, nowTs) {
+  if (nowTs < rec.checkinTs) return { text: '等待检录', cls: 'st-wait' };
+  if (nowTs < rec.startTs)   return { text: '正在检录', cls: 'st-go'   };
+  return                            { text: '停止检录', cls: 'st-stop' };
+}
+
+function update() {
+  const nowTs = Date.now();
+  const list = [];
+
+  for (const rec of records) {
+    const st = statusOf(rec, nowTs);
+
+    // 停止检录满 10 分钟 → 丢弃该行，后面的自动上移补齐
+    if (st.cls === 'st-stop' && nowTs >= rec.startTs + STOP_REMOVE_MS) continue;
+
+    // 超过 10 行不再显示
+    if (list.length >= MAX_ROWS) break;
+
+    list.push({ rec, st });
+  }
+
+  const html = list.map(({ rec, st }) => `
+    <tr>
+      <td>${rec.name}</td>
+      <td>${rec.event}</td>
+      <td>${rec.gate}</td>
+      <td>${rec.lane}</td>
+      <td>${fmtTime(rec.startTs)}</td>
+      <td>${fmtTime(rec.checkinTs)}</td>
+      <td class="${st.cls}">${st.text}</td>
+    </tr>`).join('');
+
+  // 内容有变化才写 DOM
+  if (html !== lastHTML) {
+    tbody.innerHTML = html;
+    lastHTML = html;
+  }
+}
+
+/* =========================================================
+   启动：每秒按设备本地时间重算一次
+   ========================================================= */
+update();
+setInterval(update, 1000);
+</script>
+
+</body>
+</html>
