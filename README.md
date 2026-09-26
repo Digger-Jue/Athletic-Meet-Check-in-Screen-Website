@@ -1,2 +1,6 @@
-# Athletic-Meet-Check-in-Screen-Website
-A large-screen display website for school sports meet check-in
+#田径比赛签到网站
+学校运动会签到大屏网站
+
+
+** 本网页由 AI 生成**
+内容由人工智能自动生成。
