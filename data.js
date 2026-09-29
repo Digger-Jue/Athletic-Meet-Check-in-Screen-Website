@@ -25,8 +25,8 @@ window.CHECKIN_CONFIG = {
    start   : 开始时间
 -------------------------------- */
 window.CHECKIN_DATA = [
-  { name:'王鸿铮', event:'男子甲组1500米预决赛', gate:'1(30)', lane:'七',   checkin:'13:25', start:'13:55' },
   { name:'贺梓衿', event:'男子甲组800米预决赛',  gate:'2(32)', lane:'五',   checkin:'10:15', start:'10:45' },
+  { name:'王鸿铮', event:'男子甲组1500米预决赛', gate:'1(30)', lane:'七',   checkin:'13:25', start:'13:55' },
   { name:'李晨冉', event:'女子甲组4×100米预决赛', gate:'4',    lane:'3组二', checkin:'14:39', start:'15:09' },
   { name:'李晨瑜', event:'女子甲组4×100米预决赛', gate:'4',    lane:'3组二', checkin:'14:39', start:'15:09' },
   { name:'李昕瑶', event:'女子甲组4×100米预决赛', gate:'4',    lane:'3组二', checkin:'14:39', start:'15:09' },
