@@ -97,26 +97,6 @@
         .footer-bottom { background-color: #1a252f; color: #ffffff; text-align: center; padding: 20px 0; font-size: 12px; }
         .footer-bottom p { margin-bottom: 5px; }
 
-        /* ================= 错误提示弹窗 ================= */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; opacity: 0; visibility: hidden;
-        }
-        .modal-overlay.show { opacity: 1; visibility: visible; }
-        .modal-box {
-            background: #ffffff; border-radius: 4px; width: 90%; max-width: 400px;
-            padding: 30px 20px; text-align: center; border: 1px solid #000000;
-        }
-        .modal-box h3 { font-size: 22px; color: #000000; margin-bottom: 15px; }
-        .modal-box p { font-size: 14px; color: #000000; margin-bottom: 25px; }
-        .modal-btn {
-            background-color: #ffffff; color: #000000; border: 1px solid #000000;
-            padding: 8px 25px; font-size: 14px; cursor: pointer;
-        }
-        .modal-btn:hover { background-color: #000000; color: #ffffff; }
-
         /* ================= 响应式设计 ================= */
         @media (max-width: 992px) {
             .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -139,8 +119,8 @@
         <div class="container">
             <span>欢迎访问北京育才学校陈蓉办公室官方网站！</span>
             <div class="top-links">
-                <a class="placeholder-link" data-error="401">设为首页</a> | 
-                <a class="placeholder-link" data-error="401">加入收藏</a>
+                <a href="javascript:void(0);">设为首页</a> | 
+                <a href="javascript:void(0);">加入收藏</a>
             </div>
         </div>
     </div>
@@ -148,7 +128,6 @@
     <!-- 头部 Logo 区 -->
     <header class="main-header">
         <div class="container">
-            <!-- Logo 路径已修改为当前文件夹 -->
             <img src="logo.jpg" alt="北京育才学校陈蓉办公室" class="calligraphy-logo" onerror="this.style.display='none'">
         </div>
     </header>
@@ -157,13 +136,12 @@
     <nav class="main-nav">
         <div class="container">
             <ul>
-                <!-- 首页链接已修改为当前文件夹的 index.html -->
                 <li><a href="index.html" class="active">首页</a></li>
-                <li><a class="placeholder-link" data-error="404">办公室概况</a></li>
-                <li><a class="placeholder-link" data-error="404">通知公告</a></li>
-                <li><a class="placeholder-link" data-error="404">工作动态</a></li>
-                <li><a class="placeholder-link" data-error="404">办事指南</a></li>
-                <li><a class="placeholder-link" data-error="404">联系方式</a></li>
+                <li><a href="javascript:void(0);">办公室概况</a></li>
+                <li><a href="javascript:void(0);">通知公告</a></li>
+                <li><a href="javascript:void(0);">工作动态</a></li>
+                <li><a href="javascript:void(0);">办事指南</a></li>
+                <li><a href="javascript:void(0);">联系方式</a></li>
             </ul>
         </div>
     </nav>
@@ -175,8 +153,8 @@
             <!-- 图片前面的文字（已应用首行缩进） -->
             <p class="article-text">在今年的运动会中，贺梓衿参加了男子甲组800米预决赛。</p>
             
-            <!-- 图片 -->
-            <img src="hzj.png" alt="贺梓衿" class="article-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjZmZmIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBzdHJva2U9IiNlMGUwZTAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgYWxpZ25tZW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM5OTkiPuaXoOazleWKoOi9vSB0aGogcG5nPC90ZXh0Pjwvc3ZnPg=='">
+            <!-- 图片（名称已更换为 mmexport1790739282418.png） -->
+            <img src="mmexport1790739282418.png" alt="贺梓衿" class="article-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjZmZmIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBzdHJva2U9IiNlMGUwZTAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgYWxpZ25tZW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM5OTkiPuaXoOazleWKoOi9vSBtbWV4cG9ydDE3OTA3MzkyODI0MTgucG5nPC90ZXh0Pjwvc3ZnPg=='">
             
             <!-- 图片下方的灰色小字 -->
             <p class="image-caption">供图：陈蓉</p>
@@ -196,25 +174,25 @@
                 <div>
                     <h3>关于我们</h3>
                     <ul>
-                        <li><a class="placeholder-link" data-error="404">办公室简介</a></li>
-                        <li><a class="placeholder-link" data-error="404">主要职责</a></li>
-                        <li><a class="placeholder-link" data-error="404">工作团队</a></li>
+                        <li><a href="javascript:void(0);">办公室简介</a></li>
+                        <li><a href="javascript:void(0);">主要职责</a></li>
+                        <li><a href="javascript:void(0);">工作团队</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3>快速导航</h3>
                     <ul>
-                        <li><a class="placeholder-link" data-error="404">通知公告</a></li>
-                        <li><a class="placeholder-link" data-error="404">工作动态</a></li>
-                        <li><a class="placeholder-link" data-error="404">办事指南</a></li>
+                        <li><a href="javascript:void(0);">通知公告</a></li>
+                        <li><a href="javascript:void(0);">工作动态</a></li>
+                        <li><a href="javascript:void(0);">办事指南</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3>友情链接</h3>
                     <ul>
-                        <li><a class="placeholder-link" data-error="404">北京育才学校官网</a></li>
-                        <li><a class="placeholder-link" data-error="404">北京市教育委员会</a></li>
-                        <li><a class="placeholder-link" data-error="404">中国教育部</a></li>
+                        <li><a href="javascript:void(0);">北京育才学校官网</a></li>
+                        <li><a href="javascript:void(0);">北京市教育委员会</a></li>
+                        <li><a href="javascript:void(0);">中国教育部</a></li>
                     </ul>
                 </div>
             </div>
@@ -222,49 +200,10 @@
         <div class="footer-bottom">
             <div class="container">
                 <p>&copy; 2024 北京育才学校陈蓉办公室 版权所有. All Rights Reserved.</p>
-                <p>地址：北京市西城区（示例） | 电话：010-XXXXXXXX | <a class="placeholder-link" data-error="404" style="display:inline; color: inherit; cursor:pointer;">京ICP备XXXXXXXX号-1</a></p>
+                <p>地址：北京市西城区（示例） | 电话：010-XXXXXXXX | <a href="javascript:void(0);" style="display:inline; color: inherit; cursor:pointer;">京ICP备XXXXXXXX号-1</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- 404/401 错误提示弹窗结构 -->
-    <div id="error-modal" class="modal-overlay">
-        <div class="modal-box">
-            <h3 id="modal-title">404 Not Found</h3>
-            <p id="modal-msg">抱歉，该页面正在建设中或暂时无法访问。</p>
-            <button id="modal-close" class="modal-btn">确定</button>
-        </div>
-    </div>
-
-    <!-- 页面交互脚本 -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('error-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalMsg = document.getElementById('modal-msg');
-            const closeBtn = document.getElementById('modal-close');
-
-            document.querySelectorAll('.placeholder-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    const errorCode = this.getAttribute('data-error') || '404';
-                    
-                    if (errorCode === '401') {
-                        modalTitle.innerText = '401 Unauthorized';
-                        modalMsg.innerText = '您没有权限执行此操作或访问该资源。';
-                    } else {
-                        modalTitle.innerText = '404 Not Found';
-                        modalMsg.innerText = '抱歉，该页面正在开发中或您访问的链接不存在。';
-                    }
-                    
-                    modal.classList.add('show');
-                });
-            });
-
-            const closeModal = () => { modal.classList.remove('show'); };
-            closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-        });
-    </script>
 </body>
 </html>
